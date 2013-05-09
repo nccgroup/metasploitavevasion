@@ -11,11 +11,19 @@ https://github.com/nccgroup/metasploitavevasion
 
 Released under AGPL see LICENSE for more information
 
+Installing    
+=======================
+
+    git clone https://github.com/nccgroup/metasploitavevasion.git
+
+chmod +x the avoid.sh file before use.
+
+
 How To Use	
 =======================
     ./avoid.sh
 
-chmod +x the avoid.sh file before use.
+
 
 Then follow the on screen prompts.
 
