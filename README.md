@@ -11,6 +11,7 @@ https://github.com/nccgroup/metasploitavevasion
 
 Released under AGPL see LICENSE for more information
 
+
 Installing    
 =======================
 
@@ -22,8 +23,6 @@ chmod +x the avoid.sh file before use.
 How To Use	
 =======================
     ./avoid.sh
-
-
 
 Then follow the on screen prompts.
 
@@ -37,6 +36,10 @@ Features
 * Automatically creates AutoRun files for CDROM exploitation
 
 
+Screen Shot    
+=======================
+
+<img src="http://commonexploits.com/tools/avoid/avoidscreenshot.png" alt="Screenshot" style="max-width:100%;">
 Change Log
 =======================
 
