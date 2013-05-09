@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
-# AV0id - Metapsloit Payload Anti-Virus Avoider
-# Daniel Compton - NCCGroup
+# AV0id - Metapsloit Payload Anti-Virus Avasion
+# Daniel Compton
 # www.commonexploits.com
-# contact@commexploits.com
+# info@commexploits.com
 # Twitter = @commonexploits
 # 05/2013
 # Tested on Bactrack 5 and Kali only.
-# Script updates can be found here, check you have the latest version: https://github.com/nccgroup/metasploitavevasion
+
+#####################################################################################
+# Released as open source by NCC Group Plc - http://www.nccgroup.com/
+
+# Developed by Daniel Compton, daniel dot compton at nccgroup dot com
+
+# https://github.com/nccgroup/metasploitavevasion
+
+#Released under AGPL see LICENSE for more information
+
+######################################################################################
 
 # Credit to other A.V scripts and research by Astr0baby, Vanish3r & Hasan aka inf0g33k
 
