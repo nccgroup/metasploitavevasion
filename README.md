@@ -11,3 +11,22 @@ https://github.com/nccgroup/metasploitavevasion
 
 Released under AGPL see LICENSE for more information
 
+How To Use	
+=======================
+./avoid.sh
+
+
+Features	
+=======================
+
+Easily generate a Metasploit executable payload to bypass Anti-Virus detection
+Local or remote listener generation
+Disguises the executable file with a PDF icon
+Executable opens minimised on the victims computer
+Automatically creates AutoRun files for CDROM exploitation
+
+
+Change Log
+=======================
+
+Version 1.4 - Official release.
