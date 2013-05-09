@@ -19,11 +19,11 @@ How To Use
 Features	
 =======================
 
-Easily generate a Metasploit executable payload to bypass Anti-Virus detection
-Local or remote listener generation
-Disguises the executable file with a PDF icon
-Executable opens minimised on the victims computer
-Automatically creates AutoRun files for CDROM exploitation
+* Easily generate a Metasploit executable payload to bypass Anti-Virus detection
+* Local or remote listener generation
+* Disguises the executable file with a PDF icon
+* Executable opens minimised on the victims computer
+* Automatically creates AutoRun files for CDROM exploitation
 
 
 Change Log
