@@ -13,8 +13,11 @@ Released under AGPL see LICENSE for more information
 
 How To Use	
 =======================
-./avoid.sh
+    ./avoid.sh
 
+chmod +x the avoid.sh file before use.
+
+Then follow the on screen prompts.
 
 Features	
 =======================
