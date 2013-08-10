@@ -145,7 +145,9 @@ echo " 2. Use an alternative system, i.e public external address"
 echo ""
 echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
 echo ""
+echo -ne "\e[01;32m>\e[00m "
 read INTEXT
+echo ""
 	if [ "$INTEXT" = "1" ]
 		then
 			echo ""
@@ -157,7 +159,9 @@ read INTEXT
 			echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on?"
 			echo -e "\e[1;31m-------------------------------------------------------\e[00m"
 			echo ""
+			echo -ne "\e[01;32m>\e[00m "
 			read PORT
+			echo ""
 	elif [ "$INTEXT" = "2" ]
 		then
 			echo ""
@@ -167,13 +171,17 @@ read INTEXT
 			echo -e "\e[01;31m[?]\e[00m What IP address to you want the listener to run on?"
 			echo -e "\e[1;31m--------------------------------------------------------------------\e[00m"
 			echo ""
+			echo -ne "\e[01;32m>\e[00m "
 			read IP
+			echo ""
 			echo ""
 			echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
 			echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on? - if on the internet try port 53 if restricted"
 			echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
 			echo ""
+			echo -ne "\e[01;32m>\e[00m "
 			read PORT
+			echo ""
 	else
 		echo -e "\e[01;31m[!]\e[00m You didnt select a valid option, try again"
 		echo ""
@@ -204,7 +212,9 @@ echo " 5. Desperate Stealth - about 100MB payload - slower compile - Not tested 
 echo ""
 echo -e "\e[1;31m----------------------------------------------------------------------------------------------\e[00m"
 echo ""
+echo -ne "\e[01;32m>\e[00m "
 read LEVEL
+echo ""
 	if [ "$LEVEL" = "1" ]
 		then
 			echo ""
