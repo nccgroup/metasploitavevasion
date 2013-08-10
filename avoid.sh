@@ -18,7 +18,7 @@
 
 ######################################################################################
 
-# Credit to other A.V scripts and research by Astr0baby, Vanish3r & Hasan aka inf0g33k
+# Credit to other A.V. scripts and research by Astr0baby, Vanish3r & Hasan aka inf0g33k
 
 # User options
 OUTPUTNAME="salaries.exe" # The payload exe created name
@@ -194,15 +194,15 @@ echo -e "\e[1;31m---------------------------------------------------------------
 echo -e "\e[01;31m[?]\e[00m How stealthy do you want the file? Enter 1, 2, 3, 4 or 5 and press enter"
 echo -e "\e[1;31m--------------------------------------------------------------------------------------------\e[00m"
 echo ""
-echo " 1. Normal - about 400K payoad  - fast compile - 13/46 A.V products detected as malicious"
+echo " 1. Normal - about 400K payoad  - fast compile - 13/46 A.V. products detected as malicious"
 echo ""
-echo " 2. Stealth - about 1-2 MB payload - fast compile - 12/46 A.V products detected as malicious"
+echo " 2. Stealth - about 1-2 MB payload - fast compile - 12/46 A.V. products detected as malicious"
 echo ""
-echo " 3. Super Stealth - about 10-20MB payload - fast compile - 11/46 A.V detected as malicious"
+echo " 3. Super Stealth - about 10-20MB payload - fast compile - 11/46 A.V. detected as malicious"
 echo ""
-echo " 4. Insane Stealth - about 50MB payload - slower compile - 10/46 A.V detected as malicious"
+echo " 4. Insane Stealth - about 50MB payload - slower compile - 10/46 A.V. detected as malicious"
 echo ""
-echo " 5. Desperate Stealth - about 100MB payload - slower compile - Not tested with A.V"
+echo " 5. Desperate Stealth - about 100MB payload - slower compile - Not tested with A.V."
 echo ""
 echo -e "\e[1;31m----------------------------------------------------------------------------------------------\e[00m"
 echo ""
