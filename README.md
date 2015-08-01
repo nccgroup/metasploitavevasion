@@ -11,6 +11,20 @@ https://github.com/nccgroup/metasploitavevasion
 
 Released under AGPL see LICENSE for more information
 
+===================================
+Updated 08/2015 by Jason Soto, jason_soto [AT] jsitech [DOT] com
+
+Removed Deprecated Commands in favor of MsfVenom
+
+www.jsitech.com
+
+https://github.com/jsitech
+
+Twitter = @JsiTech
+
+Tested on Kali Linux
+
+
 
 Installing    
 =======================
