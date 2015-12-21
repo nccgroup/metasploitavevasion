@@ -15,6 +15,7 @@ Released under AGPL see LICENSE for more information
 Updated 08/2015 by Jason Soto, jason_soto [AT] jsitech [DOT] com
 
 Removed Deprecated Commands in favor of MsfVenom
+===================================
 
 Updated 12/2015
 
@@ -25,6 +26,7 @@ Added gcc compiler use condition for use in Arch Based Distros
 Using "msfconsole -x" for auto Listener launching instead of resource file
 
 Code Cleanup
+
 
 www.jsitech.com
 

