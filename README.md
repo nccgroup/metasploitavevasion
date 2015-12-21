@@ -16,10 +16,14 @@ Updated 08/2015 by Jason Soto, jason_soto [AT] jsitech [DOT] com
 
 Removed Deprecated Commands in favor of MsfVenom
 
-Updated 12/2015 
+Updated 12/2015
+
 Removed use of ifconfig for more Distro Compatibility, Using "ip route" for ip Detection
+
 Added gcc compiler use condition for use in Arch Based Distros
+
 Using "msfconsole -x" for auto Listener launching instead of resource file
+
 Code Cleanup
 
 www.jsitech.com
